@@ -1,6 +1,11 @@
 #include <iostream>
 
+
+void printHello(std::ostream& os) {
+    os << "Hello, World!";
+}
+
 int main() {
-    std::cout << "Hello World!" << std::endl;
+    printHello(std::cout);
     return 0;
 }
