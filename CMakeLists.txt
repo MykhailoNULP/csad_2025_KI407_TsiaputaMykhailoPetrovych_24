@@ -38,11 +38,10 @@ if(BUILD_TESTS)
     include(FetchContent)
 
     # Use a known stable release of GoogleTest
-   FetchContent_Declare(
-    googletest
-    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
-    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
-)
+    FetchContent_Declare(
+        googletest
+        URL https://github.com/google/googletest/archive/refs/tags/release-1.14.0.zip
+    )
     # For MSVC: prefer shared CRT for gtest to match project settings (no-op on other platforms)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
