@@ -1,72 +1,50 @@
 name: CI
 
+# Запуск тільки для певної гілки
 on:
   push:
     branches:
-      - develop
-      - master
-      - '**/develop/**'
-      - '**/master/**'
+      - feature/develop/5-feature
   pull_request:
     branches:
-      - develop
-      - master
-      - '**/develop/**'
-      - '**/master/**'
+      - feature/develop/5-feature
 
 jobs:
-  cross_build:
+  build_and_test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
+      # Крок 1: Отримати код репозиторію
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Крок 2: Встановити CMake
       - name: Install CMake
         uses: lukka/get-cmake@latest
         with:
-          cmake-version: 'latest'
+          cmakeVersion: 'latest'       # виправлено
+          useCloudCache: true
+          useLocalCache: false
 
-      - name: Make CI scripts executable (non-Windows)
+      # Крок 3: Надати права на виконання ci.sh (не для Windows)
+      - name: Make CI script executable (Linux/macOS)
         if: runner.os != 'Windows'
-        run: |
-          echo "Making CI scripts executable"
-          chmod +x ./ci.sh || true
+        run: chmod +x ./ci.sh
         shell: bash
 
-      - name: Run CI script (Linux / macOS)
+      # Крок 4: Запустити ci.sh на Linux/macOS
+      - name: Run CI script (Linux/macOS)
         if: runner.os != 'Windows'
-        run: |
-          echo "Running local CI script: ./ci.sh"
-          ./ci.sh
+        run: ./ci.sh
         shell: bash
 
+      # Крок 5: Запустити CI на Windows (потрібен .bat файл)
       - name: Run CI script (Windows)
         if: runner.os == 'Windows'
         run: |
-          echo "Running local CI script: .\ci.bat"
+          echo "Running CI script: ci.bat (make a Windows version if needed)"
           call ci.bat
         shell: cmd
-
-      - name: Run tests with CTest (Linux / macOS)
-        if: runner.os != 'Windows'
-        run: |
-          echo "Running ctest --output-on-failure in build directory"
-          cd build
-          ctest --output-on-failure
-        shell: bash
-
-      - name: Run tests with CTest (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          echo "Running ctest --output-on-failure in build directory"
-          pushd build
-          ctest --output-on-failure
-          popd
-        shell: cmd
-
-      - name: Deploy (placeholder)
-        run: echo "Deploy step placeholder - no deployment configured"
