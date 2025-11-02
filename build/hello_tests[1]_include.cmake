@@ -1,0 +1,5 @@
+if(EXISTS "C:/Users/Admin/csad_2025_KI407_TsiaputaMykhailoPetrovych_24/build/hello_tests[1]_tests.cmake")
+  include("C:/Users/Admin/csad_2025_KI407_TsiaputaMykhailoPetrovych_24/build/hello_tests[1]_tests.cmake")
+else()
+  add_test(hello_tests_NOT_BUILT hello_tests_NOT_BUILT)
+endif()

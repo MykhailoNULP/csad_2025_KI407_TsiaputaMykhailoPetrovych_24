@@ -1,0 +1,3 @@
+C:/Users/Admin/csad_2025_KI407_TsiaputaMykhailoPetrovych_24/build/_deps/googletest-subbuild/CMakeFiles/googletest-populate.dir
+C:/Users/Admin/csad_2025_KI407_TsiaputaMykhailoPetrovych_24/build/_deps/googletest-subbuild/CMakeFiles/ALL_BUILD.dir
+C:/Users/Admin/csad_2025_KI407_TsiaputaMykhailoPetrovych_24/build/_deps/googletest-subbuild/CMakeFiles/ZERO_CHECK.dir
