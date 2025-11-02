@@ -58,9 +58,10 @@ FetchContent_MakeAvailable(googletest)
     )
 
     target_link_libraries(hello_tests
-        PRIVATE
-            gtest_main
-    )
+    PRIVATE
+        gtest_main
+        hello   # <-- ось це додаємо
+)
 
     include(GoogleTest)
     gtest_discover_tests(hello_tests)
@@ -68,3 +69,8 @@ FetchContent_MakeAvailable(googletest)
     # Also provide a classic add_test for compatibility
     add_test(NAME hello_tests COMMAND hello_tests)
 endif()
+add_executable(hello_tests
+    test/main_test.cpp
+)
+
+
