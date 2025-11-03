@@ -5,15 +5,15 @@ echo "========================================"
 echo "CI: Build and test (no parameters required)"
 echo "========================================"
 
-# Create build directory
-if [ ! -d "build" ]; then
-  echo "Creating 'build' directory..."
-  mkdir build
-else
-  echo "'build' directory already exists"
+# Clean previous build (important!)
+if [ -d "build" ]; then
+  echo "Removing old 'build' directory..."
+  rm -rf build
 fi
 
-# Enter build directory
+# Create fresh build directory
+echo "Creating 'build' directory..."
+mkdir build
 cd build
 
 # Configure project
