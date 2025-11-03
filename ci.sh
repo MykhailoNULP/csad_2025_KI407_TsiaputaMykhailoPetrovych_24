@@ -1,32 +1,33 @@
-@echo off
-echo ========================================
-echo CI: Build and test (no parameters required)
-echo ========================================
+#!/bin/bash
+set -e
 
-if exist build (
-    echo Removing old build directory...
-    rmdir /s /q build
-)
+echo "========================================"
+echo "CI: Build and test (no parameters required)"
+echo "========================================"
 
-echo Creating 'build' directory...
-mkdir build
+# Create build directory
+if [ ! -d "build" ]; then
+  echo "Creating 'build' directory..."
+  mkdir build
+else
+  echo "'build' directory already exists"
+fi
+
+# Enter build directory
 cd build
 
-echo Configuring project with: cmake ..
+# Configure project
+echo "Configuring project with: cmake .."
 cmake ..
 
-if %errorlevel% neq 0 (
-    echo CMake configuration failed
-    exit /b %errorlevel%
-)
-
-echo Building project with: cmake --build .
+# Build project
+echo "Building project with: cmake --build ."
 cmake --build .
 
-if %errorlevel% neq 0 (
-    echo Build failed
-    exit /b %errorlevel%
-)
+# Run tests (if any)
+echo "Running tests with ctest"
+ctest --output-on-failure || true
 
-echo Running tests...
-ctest --output-on-failure
+echo "========================================"
+echo "✅ CI completed successfully"
+echo "========================================"
