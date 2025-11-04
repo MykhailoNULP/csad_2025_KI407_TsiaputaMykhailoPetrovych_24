@@ -5,13 +5,15 @@ echo ========================================
 echo CI: Build and test (no parameters required)
 echo ========================================
 
-REM Create build directory if it doesn't exist
-if not exist "build" (
-    echo Creating 'build' directory...
-    mkdir "build" || (echo Failed to create 'build' & exit /b 1)
-) else (
-    echo 'build' directory already exists
+REM Remove old 'build' directory if exists
+if exist "build" (
+    echo Removing old 'build' directory...
+    rmdir /s /q "build"
 )
+
+REM Create build directory
+echo Creating 'build' directory...
+mkdir "build" || (echo Failed to create 'build' & exit /b 1)
 
 REM Enter build directory
 pushd "build" || (echo Failed to change directory to 'build' & exit /b 1)
@@ -28,8 +30,8 @@ cmake --build . || (echo Build failed & popd & exit /b 1)
 
 REM Run tests
 echo.
-echo Running tests with: ctest -V
-ctest -V
+echo Running tests with: ctest --output-on-failure
+ctest --output-on-failure
 set "CTEST_EXIT=%ERRORLEVEL%"
 
 REM Return and exit with test status
