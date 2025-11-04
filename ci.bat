@@ -1,31 +1,40 @@
 @echo off
+setlocal
+
 echo ========================================
 echo CI: Build and test (no parameters required)
 echo ========================================
 
-if exist build (
+REM Remove old 'build' directory if exists
+if exist "build" (
     echo Removing old 'build' directory...
-    rmdir /s /q build
+    rmdir /s /q "build"
 )
 
+REM Create build directory
 echo Creating 'build' directory...
-mkdir build
-cd build
+mkdir "build" || (echo Failed to create 'build' & exit /b 1)
 
+REM Enter build directory
+pushd "build" || (echo Failed to change directory to 'build' & exit /b 1)
+
+REM Configure with CMake
+echo.
 echo Configuring project with: cmake ..
-cmake ..
+cmake .. || (echo CMake configuration failed & popd & exit /b 1)
 
-if %errorlevel% neq 0 exit /b %errorlevel%
-
+REM Build the project
+echo.
 echo Building project with: cmake --build .
-cmake --build .
+cmake --build . || (echo Build failed & popd & exit /b 1)
 
-if %errorlevel% neq 0 exit /b %errorlevel%
-
+REM Run tests
+echo.
 echo Running tests with: ctest --output-on-failure
 ctest --output-on-failure
+set "CTEST_EXIT=%ERRORLEVEL%"
 
-if %errorlevel% neq 0 exit /b %errorlevel%
-
-cd ..
-echo Build and tests completed successfully!
+REM Return and exit with test status
+popd
+endlocal
+exit /b %CTEST_EXIT%
