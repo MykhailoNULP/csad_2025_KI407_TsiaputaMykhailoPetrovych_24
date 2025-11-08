@@ -1,13 +1,14 @@
 name: CI
 
-# Запуск тільки для певної гілки
 on:
   push:
     branches:
-      - feature/develop/5-feature
+      - '**develop**'
+      - '**master**'
   pull_request:
     branches:
-      - feature/develop/5-feature
+      - '**develop**'
+      - '**master**'
 
 jobs:
   build_and_test:
@@ -17,34 +18,29 @@ jobs:
         os: [ubuntu-latest, macos-latest, windows-latest]
 
     steps:
-      # Крок 1: Отримати код репозиторію
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Крок 2: Встановити CMake
       - name: Install CMake
         uses: lukka/get-cmake@latest
         with:
-          cmakeVersion: 'latest'       # виправлено
+          cmakeVersion: 'latest'
           useCloudCache: true
           useLocalCache: false
 
-      # Крок 3: Надати права на виконання ci.sh (не для Windows)
       - name: Make CI script executable (Linux/macOS)
         if: runner.os != 'Windows'
         run: chmod +x ./ci.sh
         shell: bash
 
-      # Крок 4: Запустити ci.sh на Linux/macOS
       - name: Run CI script (Linux/macOS)
         if: runner.os != 'Windows'
         run: ./ci.sh
         shell: bash
 
-      # Крок 5: Запустити CI на Windows (потрібен .bat файл)
       - name: Run CI script (Windows)
         if: runner.os == 'Windows'
         run: |
-          echo "Running CI script: ci.bat (make a Windows version if needed)"
+          echo "Running CI script for Windows"
           call ci.bat
         shell: cmd
