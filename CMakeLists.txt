@@ -34,9 +34,8 @@ if(BUILD_TESTS)
     set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(googletest)
 
-    add_executable(hello_tests
-        test/main_test.cpp
-    )
+    add_executable(hello_tests tests/main_test.cpp)
+
 
     target_link_libraries(hello_tests
         PRIVATE gtest_main
