@@ -1,5 +1,11 @@
 #include <iostream>
+
+// Функція, яку перевіряють тести
+void printHello(std::ostream &out) {
+    out << "Hello, world!\n";
+}
+
 int main() {
-    std::cout << "Stage 6 build successful!" << std::endl;
+    printHello(std::cout);
     return 0;
 }

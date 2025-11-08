@@ -1,16 +1,11 @@
-// ...existing code...
 #include <gtest/gtest.h>
 #include <sstream>
-#include <string>
-#include <ostream>
 
-// Declaration of the function under test
-void printHello(std::ostream& os);
+// Декларація функції (щоб бачити її в тестах)
+void printHello(std::ostream &out);
 
 TEST(HelloFunctionTest, WritesHelloToStream) {
-    std::ostringstream ss;
-    printHello(ss);
-    std::string output = ss.str();
-    EXPECT_NE(std::string::npos, output.find("Hello"));
+    std::ostringstream output;
+    printHello(output);
+    EXPECT_EQ(output.str(), "Hello, world!\n");
 }
-// ...existing code...
