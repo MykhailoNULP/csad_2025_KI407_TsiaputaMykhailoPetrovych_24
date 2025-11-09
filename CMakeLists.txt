@@ -9,13 +9,16 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(BUILD_TESTS "Build unit tests" ON)
 
-# Create the main executable
+# Create main executable
 add_executable(hello
     main.cpp
     math_operations.cpp
 )
 
-# Install rule for the executable (cross-platform)
+# Add include path for headers
+target_include_directories(hello PRIVATE ${PROJECT_SOURCE_DIR})
+
+# Install rule for cross-platform usage
 install(TARGETS hello
     RUNTIME DESTINATION bin
 )
@@ -23,10 +26,9 @@ install(TARGETS hello
 # Unit tests
 if(BUILD_TESTS)
     enable_testing()
-
     include(FetchContent)
 
-    # Use a known stable release of GoogleTest
+    # Fetch GoogleTest
     FetchContent_Declare(
         googletest
         URL https://github.com/google/googletest/archive/refs/tags/v1.15.2.zip
@@ -42,9 +44,10 @@ if(BUILD_TESTS)
         math_operations.cpp
     )
 
-    target_link_libraries(hello_tests
-        PRIVATE gtest_main
-    )
+    # Include path for test sources
+    target_include_directories(hello_tests PRIVATE ${PROJECT_SOURCE_DIR})
+
+    target_link_libraries(hello_tests PRIVATE gtest_main)
 
     include(GoogleTest)
     gtest_discover_tests(hello_tests)
