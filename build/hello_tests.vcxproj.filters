@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\Users\Admin\csad_2025_KI407_TsiaputaMykhailoPetrovych_24\main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\Users\Admin\csad_2025_KI407_TsiaputaMykhailoPetrovych_24\test\main_test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\Admin\csad_2025_KI407_TsiaputaMykhailoPetrovych_24\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{2EC1916A-D911-3527-9D2C-0305E027A2F6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
