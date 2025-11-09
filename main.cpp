@@ -1,4 +1,5 @@
 #include <iostream>
+#include "math_operations.h"
 
 // Функція, яку перевіряють тести
 void printHello(std::ostream &out) {
@@ -7,5 +8,6 @@ void printHello(std::ostream &out) {
 
 int main() {
     printHello(std::cout);
+    std::cout << "2 + 3 = " << add(2, 3) << std::endl;
     return 0;
 }
