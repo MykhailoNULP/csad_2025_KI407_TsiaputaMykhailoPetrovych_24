@@ -1,80 +1,103 @@
-`timescale 1ns/1ps
-module tb_spi_master;
-    parameter WIDTH = 8;
+// Testbench for spi_master (Step 3)
+`timescale 1ns / 1ps // Set time units for simulation
+module spi_master_tb;
 
-    reg clk = 0;
-    reg rst = 1;
-    reg start = 0;
-    reg [WIDTH-1:0] tx_data = 0;
-    wire [WIDTH-1:0] rx_data;
-    wire rx_valid;
-    wire busy;
-    wire sclk;
-    wire cs_n;
-    wire mosi;
-    reg miso = 0;
+// ---- Test Parameters ----
+localparam CLK_PERIOD = 20; // Clock period (20 ns = 50 MHz)
 
-    // Instantiate DUT
-    spi_master #(.WIDTH(WIDTH)) dut (
-        .clk(clk),
-        .rst(rst),
-        .start(start),
-        .tx_data(tx_data),
-        .rx_data(rx_data),
-        .rx_valid(rx_valid),
-        .mosi(mosi),
-        .sclk(sclk),
-        .cs_n(cs_n),
-        .miso(miso)
-    );
+// ---- Signals to connect to the UUT (Unit Under Test) ----
+// 'reg' for inputs we generate
+reg clk_tb;
+reg reset_tb;
+reg i_start_tb;
+reg [7:0] i_tx_byte_tb;
 
-    // Clock generation: 100 MHz
-    always #5 clk = ~clk;
+// 'wire' for outputs we read
+wire o_done_tb;
+wire [7:0] o_rx_byte_tb;
+wire o_mosi_tb;
+wire o_sck_tb;
+wire o_ss_tb;
 
-    initial begin
-        $display("Starting SPI master testbench");
+// ---- 1. Instantiate the Unit Under Test (UUT) ----
+// We only need to instantiate the top-level 'spi_master'
+spi_master uut (
+    .clk(clk_tb),
+    .reset(reset_tb),
+    .i_start(i_start_tb),
+    .i_tx_byte(i_tx_byte_tb),
+    .o_done(o_done_tb),
+    .o_rx_byte(o_rx_byte_tb),
+    
+    // ---- Loopback: Connect MOSI output directly to MISO input ----
+    .i_miso(o_mosi_tb),
+    .o_mosi(o_mosi_tb),
+    .o_sck(o_sck_tb),
+    .o_ss(o_ss_tb)
+);
 
-        // Reset pulse
-        rst = 1;
-        #20;
-        rst = 0;
+// ---- 2. Clock Generation ----
+initial begin
+    clk_tb = 0;
+end
 
-        // Test vector: send 0xA5
-        tx_data = 8'hA5;
-        #10;
-        start = 1;
-        #10;
-        start = 0;
+always begin
+    # (CLK_PERIOD / 2) clk_tb = ~clk_tb; // Invert clock every 10 ns
+end
 
-        // Drive MISO with a pattern (0x3C) during transfer
-        fork
-        begin
-            wait(cs_n == 0);
-            #7;
-            miso = 0; #10;
-            miso = 0; #10;
-            miso = 1; #10;
-            miso = 1; #10;
-            miso = 1; #10;
-            miso = 1; #10;
-            miso = 0; #10;
-            miso = 0; #10;
-        end
-        join
+// ---- 3. Test Sequence ----
+initial begin
+    $display("Starting SPI Master Testbench (Loopback Mode)...");
+    
+    // Set initial values
+    reset_tb <= 1; // Start in reset state
+    i_start_tb <= 0;
+    i_tx_byte_tb <= 8'h00;
 
-        // Wait for reception
-        wait(rx_valid == 1);
-        $display("Received data: 0x%0h", rx_data);
+    // Hold reset for 5 cycles
+    # (CLK_PERIOD * 5);
 
-        #100;
-        $display("Testbench finished");
-        $finish;
-    end
+    // De-assert reset. Module should go to S_IDLE
+    reset_tb <= 0;
+    
+    // Wait 10 cycles
+    # (CLK_PERIOD * 10);
 
-    // VCD dump for waveform viewing
-    initial begin
-        $dumpfile("tb_spi_master.vcd");
-        $dumpvars(0, tb_spi_master);
-    end
+    // --- TEST 1: Send byte 0xA5 ---
+    $display("TEST 1: Sending 0xA5...");
+    i_start_tb <= 1;    // Press "Start"
+    i_tx_byte_tb <= 8'hA5; // 0b10100101
+    
+    # CLK_PERIOD;       // Hold "Start" for one cycle
+    i_start_tb <= 0;
+    
+    // Wait for the module to signal it's done (o_done_tb == 1)
+    wait (o_done_tb == 1);
+    
+    $display("TEST 1: Done flag received. Sent: 0xA5, Received: %h",
+             o_rx_byte_tb);
+
+    // Wait 20 cycles before next test
+    # (CLK_PERIOD * 20);
+
+    // --- TEST 2: Send byte 0xF0 ---
+    $display("TEST 2: Sending 0xF0...");
+    i_start_tb <= 1;    // Press "Start"
+    i_tx_byte_tb <= 8'hF0; // 0b11110000
+    
+    # CLK_PERIOD;       // Hold "Start" for one cycle
+    i_start_tb <= 0;
+    
+    // Wait for the module to signal it's done
+    wait (o_done_tb == 1);
+    
+    $display("TEST 2: Done flag received. Sent: 0xF0, Received: %h",
+             o_rx_byte_tb);
+             
+    # (CLK_PERIOD * 20);
+
+    // ---- Finish Simulation ----
+    $display("Simulation Finished.");
+    $stop;
+end
 endmodule
-

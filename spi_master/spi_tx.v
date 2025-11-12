@@ -1,45 +1,23 @@
-// ============================================================
-// Module: SPI Master Transmitter (spi_tx)
-// Description: Handles MOSI output data and SCLK generation
-// ============================================================
-module spi_tx #(parameter WIDTH = 8)(
-    input  wire        clk,      // System clock
-    input  wire        rst,      // Reset signal
-    input  wire        start,    // Start transmission
-    input  wire [WIDTH-1:0] tx_data, // Data to transmit
-    output reg         sclk,     // SPI clock output
-    output reg         mosi,     // Master-Out-Slave-In
-    output reg         cs_n,     // Chip Select (active low)
-    output reg         busy,     // Transmission in progress
-    output reg         done      // Transmission finished
+// SPI Transmitter (Tx) Module
+module spi_tx (
+input wire clk,
+input wire reset,
+input wire i_load, 
+input wire i_clk_spi_edge, 
+input wire [7:0] i_tx_byte, 
+output wire o_mosi
 );
-
-    reg [WIDTH-1:0] shift_reg;
-    reg [3:0] bit_cnt;
-
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
-            sclk <= 0; cs_n <= 1; mosi <= 0;
-            busy <= 0; done <= 0; bit_cnt <= 0;
-        end else begin
-            if (start && !busy) begin
-                busy <= 1; cs_n <= 0;
-                shift_reg <= tx_data;
-                bit_cnt <= WIDTH - 1;
-                done <= 0;
-            end else if (busy) begin
-                sclk <= ~sclk;
-                if (sclk) begin
-                    mosi <= shift_reg[bit_cnt];
-                    if (bit_cnt == 0) begin
-                        busy <= 0;
-                        cs_n <= 1;
-                        done <= 1;
-                    end else
-                        bit_cnt <= bit_cnt - 1;
-                end
-            end
-        end
-    end
+reg [7:0] tx_shift_reg = 0;
+always @(posedge clk or posedge reset) begin
+if (reset) begin
+tx_shift_reg <= 0;
+end else begin
+if (i_load) begin
+tx_shift_reg <= i_tx_byte;
+end else if (i_clk_spi_edge) begin
+tx_shift_reg <= tx_shift_reg << 1;
+end
+end
+end
+assign o_mosi = tx_shift_reg[7];
 endmodule
-
