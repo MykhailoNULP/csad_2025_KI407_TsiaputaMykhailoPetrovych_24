@@ -1,0 +1,71 @@
+# Current time Tue Nov 11 12:55:39 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2021.1"
+# Version = "2021.02"
+# Date = "Feb  3 2021"
+# Platform = win32aloem
+
+Exception c0000005 has occurred at address 6efdc952. Traceback:
+# 0    0x6efdc952: 'TkSetWindowMenuBar + 0x59b2'
+# 1    0x6efdcbea: 'TkSetWindowMenuBar + 0x5c4a'
+# 2    0x7250653b: 'TclServiceIdle + 0x4b'
+# 3    0x00721dc8: 'Sqlite3_Unload + 0x6cb8'
+# 4    0x0051a626: 'EnumDispProc + 0x32236'
+# 5    0x0051a77c: 'EnumDispProc + 0x3238c'
+# 6    0x72441fae: 'TclInvokeStringCommand + 0xbe'
+# 7    0x724439f1: 'TclNREvalObjv + 0x3e1'
+# 8    0x72443a49: 'TclNRRunCallbacks + 0x49'
+# 9    0x7244563c: 'Tcl_EvalObjEx + 0x2c'
+# 10   0x00549147: 'EnumDispProc + 0x60d57'
+StackWalk failed 299
+# End of Stack Trace
+
+# Current time Tue Nov 11 12:55:39 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2021.1"
+# Version = "2021.02"
+# Date = "Feb  3 2021"
+# Platform = win32aloem
+
+Exception c0000005 has occurred at address 6efdc952. Traceback:
+# 0    0x6efdc952: 'TkSetWindowMenuBar + 0x59b2'
+# 1    0x6efdcbea: 'TkSetWindowMenuBar + 0x5c4a'
+# 2    0x7250653b: 'TclServiceIdle + 0x4b'
+# 3    0x7249efbe: 'TclInThreadExit + 0xce'
+StackWalk failed 299
+# End of Stack Trace
+
+# Current time Tue Nov 11 12:55:39 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2021.1"
+# Version = "2021.02"
+# Date = "Feb  3 2021"
+# Platform = win32aloem
+
+Exception c0000005 has occurred at address 6efdc952. Traceback:
+# 0    0x6efdc952: 'TkSetWindowMenuBar + 0x59b2'
+# 1    0x6efdcbea: 'TkSetWindowMenuBar + 0x5c4a'
+# 2    0x7250653b: 'TclServiceIdle + 0x4b'
+# 3    0x7249efbe: 'TclInThreadExit + 0xce'
+StackWalk failed 299
+# End of Stack Trace
+
+# Current time Tue Nov 11 12:55:39 2025
+# ModelSim - Intel FPGA Edition Stack Trace
+# Program = vish
+# Id = "2021.1"
+# Version = "2021.02"
+# Date = "Feb  3 2021"
+# Platform = win32aloem
+
+Exception c0000005 has occurred at address 6efdc952. Traceback:
+# 0    0x6efdc952: 'TkSetWindowMenuBar + 0x59b2'
+# 1    0x6efdcbea: 'TkSetWindowMenuBar + 0x5c4a'
+# 2    0x7250653b: 'TclServiceIdle + 0x4b'
+# 3    0x7249efbe: 'TclInThreadExit + 0xce'
+StackWalk failed 299
+# End of Stack Trace
+

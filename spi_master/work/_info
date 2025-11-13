@@ -1,0 +1,116 @@
+m255
+K4
+z2
+!s11f vlog 2021.1 2021.02, Feb  3 2021
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+Z0 dC:/Users/Admin/csad_2025_KI407_TsiaputaMykhailoPetrovych_24/spi_master
+vspi_master
+Z1 !s110 1762980820
+!i10b 1
+!s100 [1H@z0VR`PYAf2FdAI`6]3
+IT`7OOA6OcM2cknSI?a1mi1
+R0
+w1762980388
+8spi_master.v
+Fspi_master.v
+!i122 6
+L0 3 124
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+Z3 OV;L;2021.1;73
+r1
+!s85 0
+31
+Z4 !s108 1762980820.000000
+!s107 tb_spi_master.v|spi_tx.v|spi_rx.v|spi_master.v|
+Z5 !s90 -reportprogress|300|spi_master.v|spi_rx.v|spi_tx.v|tb_spi_master.v|
+!i113 1
+Z6 tCvgOpt 0
+vspi_master_tb
+R1
+!i10b 1
+!s100 Cc_0mLz4?Pzmk2=HzML5P3
+IZjaVFX<m[Mg]c:XL;2F993
+R0
+w1762980782
+Z7 8tb_spi_master.v
+Z8 Ftb_spi_master.v
+!i122 6
+L0 3 101
+R2
+R3
+r1
+!s85 0
+31
+R4
+Z9 !s107 tb_spi_master.v|spi_tx.v|spi_rx.v|spi_master.v|
+R5
+!i113 1
+R6
+vspi_rx
+R1
+!i10b 1
+!s100 nAhJJck>LEg_AdYdf[^]33
+ISl`4CO__l6iQbE2SH9KWG0
+R0
+w1762980398
+8spi_rx.v
+Fspi_rx.v
+!i122 6
+L0 2 19
+R2
+R3
+r1
+!s85 0
+31
+R4
+R9
+R5
+!i113 1
+R6
+vspi_tx
+R1
+!i10b 1
+!s100 Z8DkS@j<CnD==K0Kb3Ez41
+Ikl?O7ac1S1_G;QfH^17:M2
+R0
+w1762980404
+8spi_tx.v
+Fspi_tx.v
+!i122 6
+L0 2 22
+R2
+R3
+r1
+!s85 0
+31
+R4
+R9
+R5
+!i113 1
+R6
+vtb_spi_master
+!s110 1762858569
+!i10b 1
+!s100 7h[0o`RbCf8c<ToT:fN>B3
+Iedo;bGR6U_DKM1?lTKmLS1
+R0
+w1762820141
+R7
+R8
+!i122 4
+L0 2 78
+R2
+R3
+r1
+!s85 0
+31
+!s108 1762858569.000000
+!s107 tb_spi_master.v|spi_master.v|spi_rx.v|spi_tx.v|
+!s90 -reportprogress|300|spi_tx.v|spi_rx.v|spi_master.v|tb_spi_master.v|
+!i113 1
+R6
